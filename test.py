@@ -1,5 +1,9 @@
-from youtubesearchpython import VideosSearch
+from icrawler.builtin import GoogleImageCrawler
 
-videosSearch = VideosSearch('The Shawshank Redemption', limit = 2)
-
-print(videosSearch.result()['result'][0]['link'])
+crawler = GoogleImageCrawler(
+    feeder_threads=1,
+    parser_threads=1,
+    downloader_threads=4,
+    storage={'root_dir': None},  # Set root_dir to None to prevent image download
+)
+x = crawler.crawl('cat', max_num=3)

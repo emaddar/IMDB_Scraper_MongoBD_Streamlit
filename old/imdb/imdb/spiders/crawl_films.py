@@ -6,22 +6,6 @@ from ast import literal_eval
 from ..items import ImdbItem_films
 
 
-def convert_string_to_number(s):
-  # Split the string into the numeric part and the suffix
-  num_str, suffix = s[:-1], s[-1]
-  
-  # Convert the numeric part to a float
-  num = float(num_str)
-  
-  if suffix == "":
-    return num
-  if suffix == "K":
-    return num * 1000
-  elif suffix == "M":
-    return num * 1000000
-  else:
-    # If the suffix is not recognized, return the original string
-    return s
 
 
 class CrawlFilmsSpider(CrawlSpider):
@@ -61,17 +45,12 @@ class CrawlFilmsSpider(CrawlSpider):
     )
     
 
-
-
-
-
     def parse_item(self, response):
         items = ImdbItem_films()
 
         # languages = response.xpath('//*[@id="__next"]/main/div/section[1]/div/section/div/div[1]/section[13]/div[2]/ul/li[4]/div/ul/li/a/text()').extract()
         items['title'] = response.xpath('//h1/text()').extract()
-        items["original_title"] = response.xpath("//div[@class='sc-dae4a1bc-0 gwBsXc']/text()").extract()
-        items['year'] = int(response.xpath('//span[@class="sc-8c396aa2-2 itZqyK"]/text()').extract_first())
+        items['year'] = response.xpath('//span[@class="sc-8c396aa2-2 itZqyK"]/text()').extract_first()
         items['duration'] = response.xpath('//li[@class="ipc-inline-list__item"]/text()').extract()
 
         # Use re.sub() to replace the characters with nothing
@@ -88,40 +67,22 @@ class CrawlFilmsSpider(CrawlSpider):
         items['duration'] = int(items['duration'][0] * 60 + items['duration'][1]) # convert to minutes only
 
         
-        items['note'] = response.xpath("//span[@class='sc-7ab21ed2-1 jGRxWM']/text()").extract_first()
-        items['note'] = float(re.findall(r'\d+\.\d+', items['note'])[0])
-
+        items['note'] = response.xpath('//span[@class="sc-7ab21ed2-1 jGRxWM"]/text()').extract_first()
         items['n_total'] = response.xpath('//div[@class="sc-7ab21ed2-3 dPVcnq"]/text()').extract_first()
-        items['n_total'] =  convert_string_to_number(items['n_total'])
-
         items['Genre'] = response.xpath('//span[@class="ipc-chip__text"]/text()').extract()[:-1]
-        items['Descriptions'] = response.xpath('//span[@class="sc-16ede01-2 gXUyNh"]/text()').extract_first()
+        items['Descriptions'] = response.xpath('//span[@class="sc-16ede01-2 gXUyNh"]/text()').extract()
         items['Director'] = response.xpath('//a[@class="ipc-metadata-list-item__list-content-item ipc-metadata-list-item__list-content-item--link"]/text()').extract_first()
         items['Acteurs'] = response.xpath('//a[@class="sc-bfec09a1-1 gfeYgX"]/text()').extract()
         items['Public'] = response.xpath('//*[@id="__next"]/main/div/section[1]/section/div[3]/section/section/div[2]/div[1]/div/ul/li[2]/a/text()').extract()
         items['Pays'] = response.xpath("/html/body/div[2]/main/div/section[1]/div/section/div/div[1]/section[@class='ipc-page-section ipc-page-section--base celwidget']/div[@class='sc-f65f65be-0 ktSkVi']/ul[@class='ipc-metadata-list ipc-metadata-list--dividers-all ipc-metadata-list--base']/li[@class='ipc-metadata-list__item'][1]/div[@class='ipc-metadata-list-item__content-container']/ul[@class='ipc-inline-list ipc-inline-list--show-dividers ipc-inline-list--inline ipc-metadata-list-item__list-content base']/li[@class='ipc-inline-list__item']/a[@class='ipc-metadata-list-item__list-content-item ipc-metadata-list-item__list-content-item--link']/text()").extract()
         items['languages'] = response.xpath('//*[@id="__next"]/main/div/section[1]/div/section/div/div[1]/section/div[2]/ul/li[4]/div/ul/li/a/text()').extract()
         items['avis'] = response.xpath('//*[@id="__next"]/main/div/section[1]/section/div[3]/section/section/div[3]/div[2]/div[2]/ul/li[1]/a/span/span[1]/text()').extract()
-        items['avis'] = [convert_string_to_number(x) for x in items['avis']][0]
-        
-       
-
         items['Metacritic'] = response.xpath('//*[@id="__next"]/main/div/section[1]/section/div[3]/section/section/div[3]/div[2]/div[2]/ul/li[3]/a/span/span[1]/span/text()').extract()
-        items['Metacritic'] = [i for i in items['Metacritic']]
-        if len(items['Metacritic']) >=1:
-             items['Metacritic'] = int(", ".join(items['Metacritic']))
-        else :
-            items['Metacritic'] = items['Metacritic']
-
         items['senario'] = response.xpath('//*[@id="__next"]/main/div/section[1]/section/div[3]/section/section/div[3]/div[2]/div[1]/div[3]/ul/li[2]/div/ul/li[1]/a/text()').extract()
         items['like'] = response.xpath('//a[@class="ipc-poster-card__title ipc-poster-card__title--clamp-2 ipc-poster-card__title--clickable"]/span/text()').extract()
         items['popularity'] = response.xpath('//div[@class="sc-edc76a2-1 gopMqI"]/text()').extract_first()
-        # items['popularity'] = [int(i) for i in items['popularity']][0]
-        if items['popularity'] != None :
-            items['popularity'] = int(items['popularity'].replace(",", ""))
-        else :
-            items['popularity'] = items['popularity']
         
+
         yield items
         # { 
         #     'popularity' : popularity,

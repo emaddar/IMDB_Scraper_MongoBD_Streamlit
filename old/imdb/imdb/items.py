@@ -25,7 +25,6 @@ class ImdbItem_films(scrapy.Item):
     popularity = scrapy.Field()
     avis = scrapy.Field()
     like = scrapy.Field()
-    original_title = scrapy.Field()
     
 class ImdbItem_series(scrapy.Item):
     # define the fields for your item here like:
