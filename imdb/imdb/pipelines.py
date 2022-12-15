@@ -6,14 +6,16 @@
 
 # useful for handling different item types with a single interface
 from itemadapter import ItemAdapter
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 import pymongo
 class Films:
 
     def __init__(self):
         self.conn = pymongo.MongoClient(
-            'localhost',
-            27017
+            os.getenv("mylink")
         )
 
         db= self.conn['IMDB']
@@ -29,8 +31,9 @@ class Series:
 
     def __init__(self):
         self.conn = pymongo.MongoClient(
-            'localhost',
-            27017
+             os.getenv("mylink")
+            # 'localhost',
+            # 27017
         )
 
         db= self.conn['IMDB']

@@ -10,7 +10,7 @@ class ImdbItem_films(scrapy.Item):
     # define the fields for your item here like:
     title = scrapy.Field()
     year = scrapy.Field()
-    Duration = scrapy.Field()
+    duration = scrapy.Field()
     note = scrapy.Field()
     n_total = scrapy.Field()
     Genre = scrapy.Field()
