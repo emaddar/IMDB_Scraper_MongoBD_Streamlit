@@ -38,27 +38,26 @@ class CrawlSeriesSpider(CrawlSpider):
         items['title'] = response.xpath('//h1/text()').extract()
         items['year'] = response.xpath('//span[@class="sc-8c396aa2-2 itZqyK"]/text()').extract_first()
 
-        items['duration'] = response.xpath('//li[@class="ipc-inline-list__item"]/text()').extract()
-        items['type'] = items['duration'][0]
+        items['type'] = response.xpath('//li[@class="ipc-inline-list__item"]/text()').extract()
+        items['type'] = items['type'][0]
 
-        items['duration'].pop(0) # remove first element
-        # Use re.sub() to replace the characters with nothing
-        characters_to_remove = [",", "'"]
-        items['duration'] = re.sub("[" + "".join(characters_to_remove) + "]", "", str(items['duration']))
-        # if 'h' in items['duration'] and 'm' in items['duration']:
+       
+        # items['Duration'] = response.css("div.sc-80d4314-2 > ul >li:last-child::text").extract()
+        # # Use re.sub() to replace the characters with nothing
+        # characters_to_remove = [",", "'"]
+        # items['Duration'] = re.sub("[" + "".join(characters_to_remove) + "]", "", str(items['Duration']))
+        # if 'h' in items['Duration'] and 'm' in items['Duration']:
         #       characters_to_remove = ["h", "m"]
-        #       items['duration'] = re.sub("[" + "".join(characters_to_remove) + "]", "", str(items['duration']))
-        #       items['duration'] = re.sub("    ", ",", items['duration'])
-        # # if 'h' in items['duration'] :
-        # #     items['duration'] = re.sub("h", ",0", items['duration'])
-        # # if 'm' in items['duration'] :
-        # #     items['duration'][1] = re.sub("m", "", items['duration'])
-        # #     items['duration'][0] =0
-        # # items['duration'] = literal_eval(items['duration']) #to convert string to list
-        # # items['duration'] = int(items['duration'][0] * 60 + items['duration'][1]) # convert to minutes only
+        #       items['Duration'] = re.sub("[" + "".join(characters_to_remove) + "]", "", str(items['Duration']))
+        #       items['Duration'] = re.sub("    ", ",", items['Duration'])
+        # if 'h' in items['Duration'] :
+        #     items['Duration'] = re.sub("h", ",0", items['Duration'])
+        # if 'm' in items['Duration'] :
+        #     items['Duration'][1] = re.sub("m", "", items['Duration'])
+        #     items['Duration'][0] =0
+        # items['Duration'] = literal_eval(items['Duration']) #to convert string to list
+        # items['Duration'] = int(items['Duration'][0] * 60 + items['Duration'][1]) # convert to minutes only
         
-        
-
 
         items['note'] = response.xpath('//span[@class="sc-7ab21ed2-1 jGRxWM"]/text()').extract_first()
         items['n_total'] = response.xpath('//div[@class="sc-7ab21ed2-3 dPVcnq"]/text()').extract_first()
@@ -85,7 +84,7 @@ class CrawlSeriesSpider(CrawlSpider):
         #     'Pays' : Pays,
         #     'title': title,
         #     'year' : year,
-        #     'duration (minutes)' : duration,
+        #     'Duration (minutes)' : Duration,
         #     'type' : type,
         #     'note' : note,
         #     'n_total' : n_total,

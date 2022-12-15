@@ -9,14 +9,7 @@ from pymongo import MongoClient
 
 
 
-# create a MongoClient instance to connect to the database
-client = MongoClient('mongodb://localhost:27017/')
 
-# get a reference to the database
-db = client['IMDB']
-
-# get a reference to the collection
-films = db['Films']
 
 
 ############################################################################################
