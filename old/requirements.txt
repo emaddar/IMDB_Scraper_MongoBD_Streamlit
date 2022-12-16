@@ -1,7 +1,0 @@
-itemadapter==0.7.0
-pandas==1.5.0
-pymongo==4.3.3
-python-dotenv==0.21.0
-Scrapy==2.7.1
-streamlit==1.13.0
-youtube_search_python==1.6.6
