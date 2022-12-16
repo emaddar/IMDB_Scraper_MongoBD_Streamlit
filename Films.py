@@ -8,7 +8,8 @@ load_dotenv()
 from youtubesearchpython import VideosSearch
 
 
-st.set_page_config(layout="wide")
+st.set_page_config(page_icon=":movie_camera:",
+                layout="wide")
 
 
 # cmdline.execute("scrapy runspider imdb/spiders/crawl_films.py -O films.csv".split())
