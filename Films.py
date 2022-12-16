@@ -69,9 +69,19 @@ mygrid_class = make_grid(class_by_limit,2)
 count = 1
 for i in search_data :
     
-    mygrid_class[0][0].markdown(f""" ##### {count} : {i['title'][0]}""")
+    mygrid_class[count-1][0].markdown(f""" #### {count} : {i['title'][0]}""")
+    mygrid_class[count-1][0].markdown(f""" :watch:  {i['duration']} minutes""")
+    mygrid_class[count-1][0].markdown(f""" ###### :star:  {i['note']}/10 (NOTE IMDb) """)
+    mygrid_class[count-1][0].markdown(f""" :date:  {i['year']}""")
+    mygrid_class[count-1][0].markdown(f""" :crossed_flags:  {i['Pays']}""")
+    mygrid_class[count-1][0].markdown(f""" :movie_camera:  {i['Genre']}""")
+    mygrid_class[count-1][0].markdown(f""" :page_with_curl:  {i['Descriptions'][0:200]}""")
+
+
+    
+    mygrid_class[count-1][1].video(get_youtube_url(i['title'][0]))
     count +=1
-    mygrid_class[0][1].video(get_youtube_url(i['title'][0]))
+    
     
 
 # mygrid1 = make_grid(1,5)
