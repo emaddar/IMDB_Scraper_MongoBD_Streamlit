@@ -42,26 +42,12 @@ def make_grid(cols,rows):
 
 st.sidebar.image("https://beafunmum.com/wp-content/uploads/2017/03/kids-movies-parents-like.jpg")
 
-def add_bg_from_url():
-    st.markdown(
-         f'''
-         <style>
-         .stApp {{
-             background-image: url("https://img.freepik.com/free-vector/white-background-with-3d-hexagonal-pattern-design_1017-28443.jpg?w=2000");
-             background-attachment: fixed;
-             background-size: cover
-         }}
-         </style>
-         ''',
-         unsafe_allow_html=True
-     )
 
-# add_bg_from_url()
 
 ############################################################################################
 ############################################################################################
 ##                                                                                        ##
-##                              Generale Informations                                     ##
+##                              Sort Movies                                               ##
 ##                                                                                        ##
 ############################################################################################
 ############################################################################################
@@ -101,7 +87,16 @@ with st.expander("Click here"):
         
         mygrid_class[count-1][1].video(get_youtube_url(i['title'][0]))
         count +=1
-    
+
+
+
+############################################################################################
+############################################################################################
+##                                                                                        ##
+##                              Search Movies                                             ##
+##                                                                                        ##
+############################################################################################
+############################################################################################
     
 find_all = films.find()
 year_list = []
@@ -171,10 +166,11 @@ with st.expander("Click here"):
         for k in range(7):
             st.write('')
 
-        mygrid_may_like = make_grid(1,3)
-        mygrid_may_like[0][1].markdown(""" #### Movies you may like """)
+        
 
         if search_by == 'title' :
+            mygrid_may_like = make_grid(1,3)
+            mygrid_may_like[0][1].markdown(""" #### Movies you may like """)
             mygrid_like = make_grid(1,5)
             for j in range(5):
                 if i['like'][j]:
