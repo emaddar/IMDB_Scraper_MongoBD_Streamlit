@@ -20,7 +20,7 @@ def get_youtube_url(query):
 
 
 # create a MongoClient instance to connect to the database
-client = MongoClient(os.getenv("mylink"))
+client = MongoClient("mongodb+srv://admin:admin@cluster0.gyo15u7.mongodb.net/?retryWrites=true&w=majority")
 
 # get a reference to the database
 db = client['IMDB']
